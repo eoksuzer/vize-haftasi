@@ -115,7 +115,10 @@
       });
       h += '</div>';
     }
-    h += '<div class="footer">İlerlemen bu cihazda saklanır.</div>';
+    h += '<div class="sec-title">Paylaş</div>';
+    h += '<button class="card share" data-act="share"><h3>📤 İlerlememi gönder</h3><p>İstatistiklerini ve yanlışlarını tek bir link olarak WhatsApp\'tan gönder. Linki açan kişi konu konu durumunu görür.</p></button>';
+    h += '<div id="sharebox"></div>';
+    h += '<div class="footer">İlerlemen bu cihazda saklanır. Gönderdiğin link o anki durumu taşır.</div>';
     app.innerHTML = h;
     window.scrollTo(0,0);
   }
@@ -268,7 +271,11 @@
       else b.classList.add("dim");
       var cap = b.querySelector(".cap"); if(cap) cap.textContent = q.o[v];
     });
-    T(it.test.id).answers[it.qi] = ok;
+    var ts = T(it.test.id);
+    ts.answers[it.qi] = ok;
+    ts.n = ts.n || {}; ts.w = ts.w || {}; ts.p = ts.p || {};
+    ts.n[it.qi] = (ts.n[it.qi]||0) + 1;
+    if(!ok){ ts.w[it.qi] = (ts.w[it.qi]||0) + 1; ts.p[it.qi] = oi; }
     Q.results.push({it:it, picked:oi, ok:ok});
     bumpStreak(); save();
     if(navigator.vibrate && !ok){ try{navigator.vibrate(60);}catch(e){} }
@@ -346,6 +353,162 @@
     question();
   }
 
+  // ---------- RAPOR: ilerlemeyi link olarak paylaş ----------
+  // Link biçimi: #r=<base64url(JSON)>  (hash sunucuya gitmez)
+  // JSON: {k:1, ad, d:tarih, s:seri, t:{testId:[best, attempts, durum, yanlışSayısı]}}
+  //   durum: soru başına bir karakter. "-" çözülmedi, "+" son cevap doğru, "a-d" son cevap yanlış (seçilen şık), "x" yanlış (şık bilinmiyor)
+  //   yanlışSayısı: soru başına toplam yanlış sayısı (0-9)
+  function b64e(str){ return btoa(unescape(encodeURIComponent(str))).replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/,""); }
+  function b64d(str){ str=str.replace(/-/g,"+").replace(/_/g,"/"); while(str.length%4) str+="="; return decodeURIComponent(escape(atob(str))); }
+
+  function packProgress(){
+    var out = {k:1, ad:S.name||"", d:today(), s:S.streak||0, t:{}};
+    TESTS.forEach(function(t){
+      var s = S.tests[t.id]; if(!s) return;
+      var st = "", wc = "", any = false;
+      t.questions.forEach(function(_,i){
+        var a = s.answers[i], p = s.p && s.p[i], w = (s.w && s.w[i]) || (a===false ? 1 : 0);
+        if(a===undefined) st += "-";
+        else { any = true; st += a ? "+" : (p===undefined ? "x" : "abcd"[p]); }
+        wc += Math.min(w,9);
+      });
+      if(any || s.attempts) out.t[t.id] = [s.best, s.attempts||0, st, wc];
+    });
+    return out;
+  }
+
+  function shareProgress(){
+    if(!S.name){
+      var n = prompt("Raporda görünecek adın (boş bırakabilirsin):", "");
+      if(n===null) return;
+      S.name = n.trim().slice(0,30); save();
+    }
+    var url = location.origin + location.pathname + "#r=" + b64e(JSON.stringify(packProgress()));
+    var text = (S.name ? S.name+" · " : "") + "Vize Haftası ilerleme raporum";
+    var box = document.getElementById("sharebox");
+    function showBox(msg){
+      box.innerHTML = '<div class="sharebox"><b>'+esc(msg)+'</b><textarea readonly rows="3">'+esc(url)+'</textarea></div>';
+      var ta = box.querySelector("textarea"); ta.focus(); ta.select();
+    }
+    if(navigator.share){
+      navigator.share({title:"Vize Haftası raporu", text:text, url:url}).catch(function(){ showBox("Paylaşım iptal edildi. Linki buradan kopyalayabilirsin:"); });
+    } else if(navigator.clipboard){
+      navigator.clipboard.writeText(url).then(function(){ showBox("Link kopyalandı. WhatsApp'a yapıştırıp gönder:"); }, function(){ showBox("Linki kopyala ve gönder:"); });
+    } else showBox("Linki kopyala ve gönder:");
+  }
+
+  var REP = null;
+  function readReport(){
+    var m = location.hash.match(/^#r=([A-Za-z0-9_-]+)/);
+    if(!m) return null;
+    try{ var r = JSON.parse(b64d(m[1])); return r && r.k===1 ? r : null; }catch(e){ return null; }
+  }
+
+  function repTest(t){
+    var x = REP.t[t.id]; if(!x) return null;
+    var res = {solved:0, correct:0, wrong:[]};
+    t.questions.forEach(function(q,i){
+      var c = x[2].charAt(i);
+      if(!c || c==="-") return;
+      res.solved++;
+      if(c==="+") res.correct++;
+      else res.wrong.push({q:q, qi:i, picked: "abcd".indexOf(c), times: +x[3].charAt(i) || 1});
+    });
+    return res;
+  }
+  function repStats(list){
+    var o = {total:0, solved:0, correct:0, wrong:[]};
+    list.forEach(function(t){
+      o.total += t.questions.length;
+      var r = repTest(t); if(!r) return;
+      o.solved += r.solved; o.correct += r.correct;
+      r.wrong.forEach(function(w){ w.test = t; o.wrong.push(w); });
+    });
+    o.pct = o.solved ? Math.round(o.correct/o.solved*100) : 0;
+    o.cover = o.total ? Math.round(o.solved/o.total*100) : 0;
+    return o;
+  }
+  function pctColor(p){ return p>=80 ? "var(--ok)" : p>=50 ? "var(--brand)" : "var(--bad)"; }
+
+  function reportPage(){
+    view = {name:"report"};
+    var all = repStats(TESTS);
+    var who = REP.ad ? REP.ad : "Arkadaşın";
+    var h = '<button class="back" data-act="closereport">← Kendi siteme dön</button>';
+    h += '<div class="course-title"><small>İlerleme raporu · '+esc(REP.d)+' tarihli</small><h1>'+esc(who)+'</h1></div>';
+    h += '<div class="stats"><div class="stat"><b>'+all.solved+'/'+all.total+'</b><span>çözülen soru</span></div>'
+      + '<div class="stat"><b style="color:'+pctColor(all.pct)+'">%'+all.pct+'</b><span>başarı</span></div>'
+      + '<div class="stat"><b>'+(REP.s||0)+'🔥</b><span>gün seri</span></div></div>';
+    h += '<button class="btn ghost" data-act="copyreport">📋 Raporu metin olarak kopyala</button><div id="copymsg" class="empty"></div>';
+
+    // zayıf konular
+    var units = [];
+    COURSES.forEach(function(c){ c.units.forEach(function(u){
+      var st = repStats(TESTS.filter(function(t){return t.course===c.id && t.unit===u.id;}));
+      if(st.solved) units.push({c:c, u:u, st:st});
+    }); });
+    var weak = units.filter(function(x){return x.st.wrong.length;}).sort(function(a,b){ return a.st.pct-b.st.pct || b.st.wrong.length-a.st.wrong.length; }).slice(0,5);
+    if(weak.length){
+      h += '<div class="sec-title">En zayıf konular</div>';
+      weak.forEach(function(x){
+        h += '<div class="rrow"><div><b>'+esc(x.u.title)+'</b><small>'+esc(x.c.name)+' · '+x.st.wrong.length+' yanlış</small></div><span style="color:'+pctColor(x.st.pct)+'">%'+x.st.pct+'</span></div>';
+      });
+    }
+
+    COURSES.forEach(function(c){
+      var cl = TESTS.filter(function(t){return t.course===c.id;}), cs = repStats(cl);
+      h += '<div class="sec-title">'+esc(c.name)+' · %'+cs.pct+' başarı · %'+cs.cover+' kapsam</div>';
+      c.units.forEach(function(u){
+        var ut = cl.filter(function(t){return t.unit===u.id;}); if(!ut.length) return;
+        var us = repStats(ut);
+        h += '<details class="runit"'+(us.wrong.length?'':' ')+'><summary><span class="code">'+esc(u.code)+'</span><span class="rt">'+esc(u.title)+'<small>'+us.solved+'/'+us.total+' çözüldü'+(us.solved?' · '+us.wrong.length+' yanlış':'')+'</small></span>'
+          + (us.solved ? '<b style="color:'+pctColor(us.pct)+'">%'+us.pct+'</b>' : '<b class="none">—</b>') + '</summary>';
+        ut.forEach(function(t){
+          var x = REP.t[t.id];
+          h += '<div class="rtest">'+esc(t.title)+' <small>'+(x && x[1] ? 'en iyi '+x[0]+'/'+t.questions.length+' · '+x[1]+' deneme' : 'test bitirilmedi')+'</small></div>';
+        });
+        us.wrong.forEach(function(w){
+          h += '<div class="review"><div class="q">❌ '+esc(w.q.q)+(w.times>1?' <span class="pill" style="background:var(--bad-soft);color:var(--bad)">'+w.times+' kez</span>':'')+'</div>';
+          if(w.q.img) h += '<div class="thumbs"><figure><img src="'+esc(w.q.img)+'" alt=""></figure></div>';
+          if(w.picked>=0) h += '<div class="line y">Seçtiği: '+esc(w.q.o[w.picked])+'</div>';
+          h += '<div class="line c">Doğru cevap: '+esc(w.q.o[w.q.a])+'</div></div>';
+        });
+        if(us.solved && !us.wrong.length) h += '<div class="empty">Bu konuda yanlışı yok.</div>';
+        h += '</details>';
+      });
+    });
+    h += '<div class="footer">Bu sayfa yalnızca linkteki verileri gösterir. Kendi ilerlemen değişmez.</div>';
+    app.innerHTML = h;
+    window.scrollTo(0,0);
+  }
+
+  function reportText(){
+    var all = repStats(TESTS);
+    var L = [];
+    L.push("VİZE HAFTASI İLERLEME RAPORU");
+    L.push("Kişi: "+(REP.ad||"-")+" · Tarih: "+REP.d+" · Genel: "+all.correct+"/"+all.solved+" doğru (%"+all.pct+"), kapsam %"+all.cover);
+    COURSES.forEach(function(c){
+      var cl = TESTS.filter(function(t){return t.course===c.id;});
+      L.push(""); L.push("## "+c.name);
+      c.units.forEach(function(u){
+        var ut = cl.filter(function(t){return t.unit===u.id;}); if(!ut.length) return;
+        var us = repStats(ut);
+        L.push("- ["+u.code+"] "+u.title+": "+(us.solved ? us.correct+"/"+us.solved+" doğru (%"+us.pct+"), "+us.solved+"/"+us.total+" çözüldü" : "çözülmedi"));
+        us.wrong.forEach(function(w){
+          L.push("    ✗ "+w.q.q+(w.q.img?" [görsel: "+w.q.img+"]":"")+" | Seçtiği: "+(w.picked>=0?w.q.o[w.picked]:"?")+" | Doğru: "+w.q.o[w.q.a]+(w.times>1?" | "+w.times+" kez yanlış":"")+" | test: "+w.test.id+"#"+w.qi);
+        });
+      });
+    });
+    return L.join("\n");
+  }
+
+  function copyReport(){
+    var txt = reportText(), msg = document.getElementById("copymsg");
+    function fallback(){ msg.innerHTML = '<textarea readonly rows="8" style="width:100%">'+esc(txt)+'</textarea>'; }
+    if(navigator.clipboard) navigator.clipboard.writeText(txt).then(function(){ msg.textContent = "Kopyalandı. İstediğin yere yapıştırabilirsin."; }, fallback);
+    else fallback();
+  }
+
   // ---------- olaylar ----------
   app.addEventListener("click", function(ev){
     var b = ev.target.closest("[data-act]"); if(!b) return;
@@ -373,7 +536,13 @@
     else if(a==="again") start(Q.testId);
     else if(a==="retrywrong") retryWrongFromResult();
     else if(a==="view"){ Q.view = b.getAttribute("data-v"); result(); }
+    else if(a==="share") shareProgress();
+    else if(a==="copyreport") copyReport();
+    else if(a==="closereport"){ history.replaceState(null, "", location.pathname + location.search); REP = null; home(); }
   });
 
-  home();
+  function route(){ REP = readReport(); if(REP) reportPage(); else if(view.name==="report") home(); }
+  window.addEventListener("hashchange", route);
+  REP = readReport();
+  if(REP) reportPage(); else home();
 })();

@@ -150,6 +150,26 @@ h1,h2,h3{margin:0;line-height:1.25}
 .navrow{display:grid;grid-template-columns:1fr 2fr 1fr;gap:8px;margin-top:12px}
 .navrow .btn{padding:13px}
 .allmix{margin-bottom:6px}
+/* v5: rapor */
+.card.share{border-style:dashed}
+.sharebox{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px;margin-bottom:10px;font-size:14px}
+.sharebox textarea,#copymsg textarea{display:block;width:100%;margin-top:8px;font:13px ui-monospace,Menlo,monospace;background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:10px;padding:8px;resize:none}
+.rrow{display:flex;align-items:center;justify-content:space-between;gap:10px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin-bottom:8px}
+.rrow small{display:block;color:var(--muted);font-size:12px}
+.rrow span{font-weight:800;font-size:18px;font-variant-numeric:tabular-nums}
+.runit{background:var(--card);border:1px solid var(--line);border-radius:14px;margin-bottom:8px;padding:0 12px}
+.runit summary{display:flex;align-items:center;gap:10px;padding:12px 0;cursor:pointer;list-style:none}
+.runit summary::-webkit-details-marker{display:none}
+.runit .code{flex:none;min-width:44px;text-align:center;font-size:12px;font-weight:800;color:var(--brand);background:var(--brand-soft);border-radius:8px;padding:4px 6px}
+.runit .rt{flex:1;font-weight:600;font-size:15px}
+.runit .rt small{display:block;font-weight:400;color:var(--muted);font-size:12px}
+.runit summary b{font-size:16px;font-variant-numeric:tabular-nums}
+.runit summary b.none{color:var(--muted)}
+.runit[open]{padding-bottom:10px}
+.runit .review{background:var(--bg)}
+.rtest{font-size:13px;margin:0 0 8px}
+.rtest small{color:var(--muted)}
+#copymsg{padding:8px 0 0}
 .footer{text-align:center;font-size:12px;color:var(--muted);padding:24px 0 8px}
 </style>
 </head>
