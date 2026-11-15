@@ -105,7 +105,7 @@
     view = {name:"home"};
     var st = stats(TESTS);
     var fresh = TESTS.filter(isNew);
-    var h = '<header class="top"><div class="brand"><small>Ders çalışma testleri</small><h1>'+esc(SITE.title)+'</h1></div></header>';
+    var h = '<header class="top"><div class="brand"><small>Ders çalışma testleri · başarılar aşkım ❤️</small><h1>'+esc(SITE.title)+'</h1></div></header>';
 
     if(fresh.length){
       var q = fresh.reduce(function(n,t){return n+t.questions.length;},0);
@@ -638,9 +638,36 @@
     else if(a==="closereport"){ history.replaceState(null, "", location.pathname + location.search); REP = null; home(); }
   });
 
+  // ---------- AÇILIŞ: motivasyon ----------
+  var LOVE = [
+    "Bu vizeler senin yanında çok küçük kalacak aşkım. Ben sana sonuna kadar inanıyorum.",
+    "Her doğru cevabında seninle biraz daha gurur duyuyorum. Hadi bir test daha!",
+    "Yorulunca bir mola ver, su iç, gül biraz. Sonra kaldığın yerden devam. Ben hep buradayım.",
+    "Sen bu işi halledersin, ben de uzaktan alkışlıyorum. Başarılar aşkım maşkım!",
+    "Bugün biraz çalış, yarın kendine teşekkür edeceksin. Ben şimdiden teşekkür ediyorum.",
+    "Vizeler biter, biz kalırız. Şimdi git o soruları parçala, sonra kutlarız.",
+    "Yanlışlar da öğretir, kafana takma. Açıklamaları oku, gerisi kendiliğinden gelir.",
+    "Dünyanın en tatlı öğrencisine: seni çok seviyorum. Sınavlar da seni sevecek.",
+    "Ellerin işaret dilini, kalbin beni çok iyi biliyor. Gerisi çocuk oyuncağı.",
+    "Bir soru daha çöz, bir adım daha yaklaş. Hedef: vize, sonra biz."
+  ];
+  function splash(){
+    try{ if(sessionStorage.getItem("vize-splash")) return; sessionStorage.setItem("vize-splash","1"); }catch(e){}
+    var st = stats(TESTS);
+    var msg = LOVE[Math.floor(Math.random()*LOVE.length)];
+    var el = document.createElement("div");
+    el.className = "splash";
+    el.innerHTML = '<div class="splash-card"><div class="splash-heart">❤️</div>'
+      + '<h2>Başarılar aşkım maşkım</h2><p>'+esc(msg)+'</p>'
+      + (st.solved ? '<div class="splash-stat">Şimdiye kadar <b>'+st.solved+'</b> soru çözdün, <b>%'+st.pct+'</b> doğru. Devam!</div>' : '<div class="splash-stat">İlk testinle başla, gerisi gelir.</div>')
+      + '<button class="btn" data-close="1">Hadi başlayalım 💪</button></div>';
+    el.addEventListener("click", function(ev){ if(ev.target===el || ev.target.getAttribute("data-close")){ el.classList.add("out"); setTimeout(function(){ el.remove(); }, 250); } });
+    document.body.appendChild(el);
+  }
+
   function route(){ REP = readReport(); if(REP) reportPage(); else if(view.name==="report") home(); }
   window.addEventListener("hashchange", route);
   REP = readReport();
-  if(REP) reportPage(); else if(location.hash==="#takip") followPage(); else home();
+  if(REP) reportPage(); else if(location.hash==="#takip") followPage(); else { home(); splash(); }
   syncSoon(500);
 })();
