@@ -162,6 +162,10 @@
     }
 
     var nq = all.reduce(function(n,t){return n+t.questions.length;},0);
+    if(c.table && window.KASLIST){
+      var nk = window.KASLIST.reduce(function(n,g){return n+g.items.length;},0);
+      h += '<button class="card ktablecard" data-act="ktable"><h3>📋 Kas tablosu</h3><p>'+nk+' kasın origo, insertio, sinir ve fonksiyonu tek sayfada. Arama kutusuyla istediğin kası bul.</p></button>';
+    }
     if(all.length > 1) h += '<button class="btn ghost allmix" data-act="mix">🔀 Tüm dersi karışık çöz ('+nq+' soru)</button>';
 
     var nCur = all.filter(function(t){return t.v===CUR;}).length;
@@ -174,12 +178,13 @@
       var us = stats(ut);
       h += '<section class="unit"><div class="unit-head"><span class="code">'+esc(u.code)+'</span><h2>'+esc(u.title)+'</h2><small>'+us.solved+'/'+us.total+'</small></div>';
       var cs = cardsOf(cid, u.id);
+      if(u.table) h += '<div class="unit-tools"><button class="chip brand" data-act="ktable" data-g="'+esc(u.table)+'">📋 Bu bölgenin tablosu</button></div>';
       if(cs.length) h += '<div class="unit-tools"><button class="chip brand" data-act="cards" data-u="'+esc(u.id)+'">🃏 İşaret kartlarıyla çalış ('+cs.length+')</button></div>';
       ut.slice().sort(function(a,b){return a.v-b.v;}).forEach(function(t){ h += card(t); });
       h += '</section>';
     });
     if(!list.length) h += '<div class="empty">Bu filtrede test yok.</div>';
-    h += '<div class="footer">Konu kodları kitaptaki içindekiler sayfasına göredir.</div>';
+    h += '<div class="footer">'+(c.table ? 'Bilgiler standart anatomi kaynaklarına göredir.' : 'Konu kodları kitaptaki içindekiler sayfasına göredir.')+'</div>';
     app.innerHTML = h;
     window.scrollTo(0,0);
   }
@@ -198,6 +203,41 @@
   }
 
   function backToCourse(){ if(Q && Q.cid) coursePage(Q.cid, Q.filter); else home(); }
+
+  // ---------- KAS TABLOSU ----------
+  function trLow(x){ return String(x).replace(/[İIı]/g,"i").toLowerCase(); }
+  function tablePage(cid, g){
+    view = {name:"ktable", cid:cid, filter:view.filter};
+    var h = '<button class="back" data-act="tocoursefromtable">← Konular</button>';
+    h += '<div class="course-title"><small>'+esc(course(cid).name)+'</small><h1>Kas tablosu'+(g?': '+esc(g):'')+'</h1></div>';
+    h += '<input id="ksearch" class="ksearch" type="search" placeholder="Kas, sinir ya da yapı ara (ör. radialis)" autocomplete="off">';
+    if(g) h += '<div class="unit-tools"><button class="chip" data-act="ktable">Tüm kasları göster</button></div>';
+    h += '<div class="klegend"><b>O</b> origo · <b>I</b> insertio · <b>S</b> sinir · <b>F</b> fonksiyon</div>';
+    window.KASLIST.forEach(function(grp){
+      if(g && grp.g !== g) return;
+      h += '<section class="kgroup"><div class="sec-title">'+esc(grp.g)+' ('+grp.items.length+')</div>';
+      if(grp.note) h += '<div class="knote">'+esc(grp.note)+'</div>';
+      grp.items.forEach(function(m){
+        h += '<div class="kcard"><h3>'+esc(m.ad)+'</h3>'+(m.alt?'<div class="kalt">'+esc(m.alt)+'</div>':'')
+          + '<dl><dt>O</dt><dd>'+esc(m.o)+'</dd><dt>I</dt><dd>'+esc(m.i)+'</dd><dt>S</dt><dd>'+esc(m.s)+'</dd><dt>F</dt><dd>'+esc(m.f)+'</dd></dl>'
+          + (m.n?'<div class="knote">💡 '+esc(m.n)+'</div>':'') + '</div>';
+      });
+      h += '</section>';
+    });
+    h += '<div id="knone" class="empty" hidden>Eşleşen kas yok.</div>';
+    app.innerHTML = h;
+    window.scrollTo(0,0);
+  }
+  app.addEventListener("input", function(ev){
+    if(ev.target.id !== "ksearch") return;
+    var q = trLow(ev.target.value.trim()), any = false;
+    app.querySelectorAll(".kgroup").forEach(function(sec){
+      var vis = 0;
+      sec.querySelectorAll(".kcard").forEach(function(c){ var ok = !q || trLow(c.textContent).indexOf(q) >= 0; c.hidden = !ok; if(ok) vis++; });
+      sec.hidden = !vis; if(vis) any = true;
+    });
+    document.getElementById("knone").hidden = any;
+  });
 
   // ---------- KARTLAR (işaret sözlüğü) ----------
   function cardsOf(cid, uid){ var c = (window.CARDS||{})[cid]; return (c && c[uid]) || []; }
@@ -590,6 +630,8 @@
     else if(a==="retrywrong") retryWrongFromResult();
     else if(a==="view"){ Q.view = b.getAttribute("data-v"); result(); }
     else if(a==="share") shareProgress();
+    else if(a==="ktable") tablePage(view.cid, b.getAttribute("data-g"));
+    else if(a==="tocoursefromtable") coursePage(view.cid, view.filter);
     else if(a==="follow") followPage();
     else if(a==="openrep"){ REP = FOLLOW[b.getAttribute("data-id")]; REP.live = true; reportPage(); }
     else if(a==="copyreport") copyReport();

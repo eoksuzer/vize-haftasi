@@ -170,15 +170,29 @@ h1,h2,h3{margin:0;line-height:1.25}
 .rtest{font-size:13px;margin:0 0 8px}
 .rtest small{color:var(--muted)}
 #copymsg{padding:8px 0 0}
+/* v6: kas tablosu */
+.ktablecard{border-color:var(--brand);background:linear-gradient(0deg,var(--brand-soft),var(--card) 75%)}
+.ksearch{display:block;width:100%;font:inherit;padding:12px 14px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--ink);margin-bottom:10px}
+.klegend{font-size:12px;color:var(--muted);margin:0 2px 4px}
+.kcard{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:10px;box-shadow:var(--shadow)}
+.kcard h3{font-size:16px;margin-bottom:2px}
+.kalt{font-size:12px;color:var(--muted);margin-bottom:4px}
+.kcard dl{display:grid;grid-template-columns:22px 1fr;gap:6px 8px;margin:8px 0 0;font-size:14px}
+.kcard dt{font-weight:800;color:var(--brand)}
+.kcard dd{margin:0}
+.knote{font-size:13px;color:var(--muted);background:var(--bg);border-radius:10px;padding:8px 10px;margin:8px 0 10px}
+.kcard .knote{margin-bottom:0}
+[hidden]{display:none!important}
 .footer{text-align:center;font-size:12px;color:var(--muted);padding:24px 0 8px}
 </style>
 </head>
 <body>
 <div class="wrap" id="app"></div>
 
-<script src="data.js?v=5"></script>
-<script src="data-kas.js?v=5"></script>
-<script src="data-tid.js?v=5"></script>
-<script src="app.js?v=5"></script>
+<script src="data.js?v=6"></script>
+<script src="data-kas.js?v=6"></script>
+<script src="data-kaslist.js?v=6"></script>
+<script src="data-tid.js?v=6"></script>
+<script src="app.js?v=6b"></script>
 </body>
 </html>

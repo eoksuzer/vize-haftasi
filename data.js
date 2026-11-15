@@ -11,13 +11,14 @@
 
 window.SITE = {
   title: "Vize Haftası",
-  version: 5,
+  version: 6,
   notes: {
     1: "İlk yükleme: Ders 1 ve Ders 2 notlarından 4 test",
     2: "Kitap başlıklarına göre konu düzeni ve 8 yeni test",
     3: "Türk İşaret Dili dersi: 5 ünite, 100 görselli soru ve işaret kartları",
     4: "Masajda kas anatomisi: origo, insertio, sinir ve fonksiyon, 7 test",
-    5: "Türk İşaret Dili 2. set: 5 test, 65 yeni soru ve gruplama soruları"
+    5: "Türk İşaret Dili 2. set: 5 test, 65 yeni soru ve gruplama soruları",
+    6: "Kas Anatomisi sekmesi: ders kas listesinin tablosu (60 kas) ve 8 test, 91 soru"
   }
 };
 
