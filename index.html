@@ -126,6 +126,29 @@ h1,h2,h3{margin:0;line-height:1.25}
 .changelog{font-size:13px;color:var(--muted);background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin-top:8px}
 .changelog div{margin:2px 0}
 .changelog b{color:var(--ink)}
+
+/* v3: görsel sorular ve kartlar */
+.qimg{display:block;width:100%;max-width:300px;aspect-ratio:4/5;object-fit:contain;margin:0 auto 14px;border-radius:16px;border:1px solid var(--line);background:#fff}
+.ogrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
+.opt.imgopt{flex-direction:column;align-items:stretch;gap:6px;padding:8px;margin:0;position:relative}
+.opt.imgopt .k{position:absolute;top:8px;left:8px}
+.opt.imgopt img{width:100%;aspect-ratio:4/5;object-fit:contain;border-radius:10px;background:#fff;display:block}
+.opt.imgopt .cap{font-size:14px;font-weight:700;text-align:center;min-height:0}
+.thumbs{display:flex;gap:8px;margin:6px 0}
+.thumbs figure{margin:0;flex:0 0 90px;text-align:center;font-size:12px;color:var(--muted)}
+.thumbs img{width:90px;border-radius:8px;border:2px solid var(--line);background:#fff;display:block}
+.thumbs .c img{border-color:var(--ok)} .thumbs .y img{border-color:var(--bad)}
+.unit-tools{display:flex;gap:8px;margin:-2px 0 10px}
+.chip{font-size:13px;font-weight:600;padding:8px 12px;border-radius:99px;background:var(--card);border:1px solid var(--line);color:var(--ink)}
+.chip.brand{background:var(--brand-soft);border-color:transparent;color:var(--brand)}
+.flash{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:14px;text-align:center;box-shadow:var(--shadow)}
+.flash img{width:100%;max-width:320px;aspect-ratio:4/5;object-fit:contain;border-radius:14px;background:#fff;display:block;margin:0 auto}
+.flash .ans{font-size:26px;font-weight:800;margin:12px 0 2px;letter-spacing:-.01em}
+.flash .pg{font-size:13px;color:var(--muted)}
+.flash .hid{font-size:15px;color:var(--muted);margin:14px 0 4px}
+.navrow{display:grid;grid-template-columns:1fr 2fr 1fr;gap:8px;margin-top:12px}
+.navrow .btn{padding:13px}
+.allmix{margin-bottom:6px}
 .footer{text-align:center;font-size:12px;color:var(--muted);padding:24px 0 8px}
 </style>
 </head>
@@ -133,6 +156,7 @@ h1,h2,h3{margin:0;line-height:1.25}
 <div class="wrap" id="app"></div>
 
 <script src="data.js"></script>
+<script src="data-tid.js"></script>
 <script src="app.js"></script>
 </body>
 </html>

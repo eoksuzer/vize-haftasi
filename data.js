@@ -11,10 +11,11 @@
 
 window.SITE = {
   title: "Vize Haftası",
-  version: 2,
+  version: 3,
   notes: {
     1: "İlk yükleme: Ders 1 ve Ders 2 notlarından 4 test",
-    2: "Kitap başlıklarına göre konu düzeni ve 8 yeni test"
+    2: "Kitap başlıklarına göre konu düzeni ve 8 yeni test",
+    3: "Türk İşaret Dili dersi: 5 ünite, 100 görselli soru ve işaret kartları"
   }
 };
 

@@ -138,6 +138,9 @@
         + '<h3>Yanlışlarım ('+wrongs.length+')</h3><p>Bu dersteki yanlışlarını karışık olarak tekrar çöz. Doğru yaptıkça listeden düşer.</p></button>';
     }
 
+    var nq = all.reduce(function(n,t){return n+t.questions.length;},0);
+    if(all.length > 1) h += '<button class="btn ghost allmix" data-act="mix">🔀 Tüm dersi karışık çöz ('+nq+' soru)</button>';
+
     var nCur = all.filter(function(t){return t.v===CUR;}).length;
     h += '<div class="tabs"><button data-act="filter" data-v="all" class="'+(view.filter==="all"?'on':'')+'">Tüm testler ('+all.length+')</button>'
       + '<button data-act="filter" data-v="new" class="'+(view.filter==="new"?'on':'')+'">Sadece V'+CUR+' ('+nCur+')</button></div>';
@@ -147,6 +150,8 @@
       if(!ut.length) return;
       var us = stats(ut);
       h += '<section class="unit"><div class="unit-head"><span class="code">'+esc(u.code)+'</span><h2>'+esc(u.title)+'</h2><small>'+us.solved+'/'+us.total+'</small></div>';
+      var cs = cardsOf(cid, u.id);
+      if(cs.length) h += '<div class="unit-tools"><button class="chip brand" data-act="cards" data-u="'+esc(u.id)+'">🃏 İşaret kartlarıyla çalış ('+cs.length+')</button></div>';
       ut.slice().sort(function(a,b){return a.v-b.v;}).forEach(function(t){ h += card(t); });
       h += '</section>';
     });
@@ -171,6 +176,33 @@
 
   function backToCourse(){ if(Q && Q.cid) coursePage(Q.cid, Q.filter); else home(); }
 
+  // ---------- KARTLAR (işaret sözlüğü) ----------
+  function cardsOf(cid, uid){ var c = (window.CARDS||{})[cid]; return (c && c[uid]) || []; }
+  var C = null;
+  function startCards(uid){
+    var list = cardsOf(view.cid, uid);
+    var u = course(view.cid).units.filter(function(x){return x.id===uid;})[0];
+    C = { cid:view.cid, filter:view.filter, title:u.title, list:list, order:list.map(function(_,i){return i;}), i:0, shown:false, mixed:false };
+    cardView();
+  }
+  function cardView(){
+    view = {name:"cards", cid:C.cid, filter:C.filter};
+    var it = C.list[C.order[C.i]], n = C.list.length;
+    var h = '<button class="back" data-act="cardsback">← Konular</button>';
+    h += '<div class="qhead"><div class="bar"><i style="width:'+Math.round((C.i+1)/n*100)+'%"></i></div><span class="count">'+(C.i+1)+' / '+n+'</span></div>';
+    h += '<div class="qtitle">'+esc(C.title)+' · işaret kartları</div>';
+    h += '<div class="flash"><img src="'+esc(it.i)+'" alt="işaret">';
+    h += C.shown ? '<div class="ans">'+esc(it.l)+'</div><div class="pg">Kitapta s. '+it.p+'</div>'
+                 : '<div class="hid">Önce tahmin et, sonra cevabı gör.</div>';
+    h += '</div>';
+    h += C.shown ? '' : '<button class="btn" data-act="creveal" style="margin-top:12px">Cevabı göster</button>';
+    h += '<div class="navrow"><button class="btn ghost" data-act="cprev">←</button>'
+      + '<button class="btn ghost" data-act="cshuffle">'+(C.mixed?'Sırayla':'🔀 Karıştır')+'</button>'
+      + '<button class="btn ghost" data-act="cnext">→</button></div>';
+    app.innerHTML = h;
+    var nx = C.list[C.order[(C.i+1)%n]]; if(nx){ var im = new Image(); im.src = nx.i; }
+  }
+
   // ---------- QUIZ ----------
   var Q = null;
 
@@ -181,6 +213,13 @@
     T(t.id).seen = true; save();
     Q = { title:t.title, mode:"test", testId:t.id, cid:t.course, filter:view.filter, i:0, results:[],
           items: t.questions.map(function(_,qi){ return {test:t, qi:qi}; }) };
+    Q.items.forEach(prep);
+    question();
+  }
+  function startMix(){
+    var cid = view.cid, items = [];
+    testsOf(cid).forEach(function(t){ t.questions.forEach(function(_,qi){ items.push({test:t, qi:qi}); }); });
+    Q = { title:"Karışık: "+course(cid).name, mode:"wrongs", cid:cid, filter:view.filter, i:0, results:[], items: shuffle(items) };
     Q.items.forEach(prep);
     question();
   }
@@ -198,12 +237,24 @@
     h += '<div class="qhead"><div class="bar"><i style="width:'+Math.round(Q.i/n*100)+'%"></i></div><span class="count">'+(Q.i+1)+' / '+n+'</span></div>';
     h += '<div class="qtitle">'+esc(Q.mode==="wrongs" ? it.test.title : Q.title)+'</div>';
     h += '<p class="qtext">'+esc(q.q)+'</p>';
-    it.order.forEach(function(oi,pos){
-      h += '<button class="opt" data-act="pick" data-oi="'+oi+'"><span class="k">'+"ABCD"[pos]+'</span><span>'+esc(q.o[oi])+'</span></button>';
-    });
+    if(q.img) h += '<img class="qimg" src="'+esc(q.img)+'" alt="işaret">';
+    if(q.oimg){
+      h += '<div class="ogrid">';
+      it.order.forEach(function(oi,pos){
+        h += '<button class="opt imgopt" data-act="pick" data-oi="'+oi+'"><span class="k">'+"ABCD"[pos]+'</span><img src="'+esc(q.oimg[oi])+'" alt="seçenek '+"ABCD"[pos]+'"><span class="cap"></span></button>';
+      });
+      h += '</div>';
+    } else {
+      it.order.forEach(function(oi,pos){
+        h += '<button class="opt" data-act="pick" data-oi="'+oi+'"><span class="k">'+"ABCD"[pos]+'</span><span>'+esc(q.o[oi])+'</span></button>';
+      });
+    }
     h += '<div id="after"></div>';
     app.innerHTML = h;
     window.scrollTo(0,0);
+    // sonraki sorunun görsellerini önceden yükle
+    var nx = Q.items[Q.i+1];
+    if(nx){ var nq = nx.test.questions[nx.qi]; [nq.img].concat(nq.oimg||[]).forEach(function(src){ if(src){ var im=new Image(); im.src=src; } }); }
   }
 
   function pick(oi, btn){
@@ -215,6 +266,7 @@
       if(v===q.a) b.classList.add("ok");
       else if(b===btn) b.classList.add("bad");
       else b.classList.add("dim");
+      var cap = b.querySelector(".cap"); if(cap) cap.textContent = q.o[v];
     });
     T(it.test.id).answers[it.qi] = ok;
     Q.results.push({it:it, picked:oi, ok:ok});
@@ -270,6 +322,15 @@
     list.forEach(function(r){
       var q = r.it.test.questions[r.it.qi];
       h += '<div class="review"><div class="q">'+(r.ok?'✅ ':'❌ ')+esc(q.q)+'</div>';
+      if(q.img || q.oimg){
+        h += '<div class="thumbs">';
+        if(q.img) h += '<figure><img src="'+esc(q.img)+'" alt=""><figcaption>Soru</figcaption></figure>';
+        if(q.oimg){
+          h += '<figure class="c"><img src="'+esc(q.oimg[q.a])+'" alt=""><figcaption>Doğru</figcaption></figure>';
+          if(!r.ok) h += '<figure class="y"><img src="'+esc(q.oimg[r.picked])+'" alt=""><figcaption>Seçtiğin</figcaption></figure>';
+        }
+        h += '</div>';
+      }
       if(!r.ok) h += '<div class="line y">Senin cevabın: '+esc(q.o[r.picked])+'</div>';
       h += '<div class="line c">Doğru cevap: '+esc(q.o[q.a])+'</div>';
       h += '<div class="ex">'+esc(q.e)+'</div></div>';
@@ -297,6 +358,13 @@
     else if(a==="filter") coursePage(view.cid, b.getAttribute("data-v"));
     else if(a==="start") start(b.getAttribute("data-id"));
     else if(a==="wrongs") startWrongs();
+    else if(a==="mix") startMix();
+    else if(a==="cards") startCards(b.getAttribute("data-u"));
+    else if(a==="creveal"){ C.shown = true; cardView(); }
+    else if(a==="cnext"){ C.i = (C.i+1) % C.list.length; C.shown = false; cardView(); }
+    else if(a==="cprev"){ C.i = (C.i-1+C.list.length) % C.list.length; C.shown = false; cardView(); }
+    else if(a==="cshuffle"){ C.mixed = !C.mixed; C.order = C.mixed ? shuffle(C.order) : C.list.map(function(_,i){return i;}); C.i = 0; C.shown = false; cardView(); }
+    else if(a==="cardsback") coursePage(C.cid, C.filter);
     else if(a==="pick" && !b.disabled) pick(+b.getAttribute("data-oi"), b);
     else if(a==="next") next();
     else if(a==="home") home();
