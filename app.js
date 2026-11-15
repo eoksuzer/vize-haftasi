@@ -4,10 +4,28 @@
 
   // ---------- storage (sessiz hata) ----------
   function load(){ try{ return JSON.parse(localStorage.getItem(KEY)) || {}; }catch(e){ return {}; } }
-  function save(){ try{ localStorage.setItem(KEY, JSON.stringify(S)); }catch(e){} }
+  function save(){ try{ localStorage.setItem(KEY, JSON.stringify(S)); }catch(e){} if(typeof syncSoon==="function" && S.tests) syncSoon(); }
   var S = load();
   S.tests = S.tests || {};   // id -> {best, last, attempts, seen, answers:{qi:bool}}
   S.streak = S.streak || 0;
+  if(!S.dev){ S.dev = Array.from({length:12},function(){return "abcdefghijklmnopqrstuvwxyz0123456789"[Math.floor(Math.random()*36)];}).join(""); try{localStorage.setItem(KEY, JSON.stringify(S));}catch(e){} }
+
+  // ---------- canlı senkron (Firebase Realtime Database, REST) ----------
+  var DB = "https://vize-haftasi-takip-default-rtdb.europe-west1.firebasedatabase.app";
+  var syncTimer = null;
+  function syncSoon(ms){ clearTimeout(syncTimer); syncTimer = setTimeout(syncNow, ms==null ? 2500 : ms); }
+  function syncNow(){
+    try{
+      var body = packProgress(); body.u = {".sv":"timestamp"};
+      if(!Object.keys(body.t).length) return;
+      fetch(DB+"/p/"+S.dev+".json", {method:"PUT", body:JSON.stringify(body), keepalive:true}).catch(function(){});
+    }catch(e){}
+  }
+  function askName(){
+    if(S.name !== undefined) return;
+    var n = prompt("Adın ne? İlerlemen bu adla görünecek.", "");
+    S.name = (n||"").trim().slice(0,30);
+  }
 
   var app = document.getElementById("app");
   var SITE = window.SITE || {title:"Vize Haftası", version:1};
@@ -115,6 +133,8 @@
       });
       h += '</div>';
     }
+    h += '<div class="sec-title">Takip</div>';
+    h += '<button class="card" data-act="follow"><h3>👥 Canlı ilerleme</h3><p>Siteyi kullanan herkesin konu konu istatistikleri ve yanlışları. Çözüldükçe kendiliğinden güncellenir.</p></button>';
     h += '<div class="sec-title">Paylaş</div>';
     h += '<button class="card share" data-act="share"><h3>📤 İlerlememi gönder</h3><p>İstatistiklerini ve yanlışlarını tek bir link olarak WhatsApp\'tan gönder. Linki açan kişi konu konu durumunu görür.</p></button>';
     h += '<div id="sharebox"></div>';
@@ -212,6 +232,7 @@
   function prep(it){ it.order = shuffle([0,1,2,3].slice(0, it.test.questions[it.qi].o.length)); }
 
   function start(testId){
+    askName();
     var t = testById(testId);
     T(t.id).seen = true; save();
     Q = { title:t.title, mode:"test", testId:t.id, cid:t.course, filter:view.filter, i:0, results:[],
@@ -220,6 +241,7 @@
     question();
   }
   function startMix(){
+    askName();
     var cid = view.cid, items = [];
     testsOf(cid).forEach(function(t){ t.questions.forEach(function(_,qi){ items.push({test:t, qi:qi}); }); });
     Q = { title:"Karışık: "+course(cid).name, mode:"wrongs", cid:cid, filter:view.filter, i:0, results:[], items: shuffle(items) };
@@ -227,6 +249,7 @@
     question();
   }
   function startWrongs(){
+    askName();
     var cid = view.cid;
     Q = { title:"Yanlışlarım", mode:"wrongs", cid:cid, filter:view.filter, i:0, results:[], items: shuffle(wrongsOf(testsOf(cid))) };
     Q.items.forEach(prep);
@@ -434,8 +457,8 @@
     view = {name:"report"};
     var all = repStats(TESTS);
     var who = REP.ad ? REP.ad : "Arkadaşın";
-    var h = '<button class="back" data-act="closereport">← Kendi siteme dön</button>';
-    h += '<div class="course-title"><small>İlerleme raporu · '+esc(REP.d)+' tarihli</small><h1>'+esc(who)+'</h1></div>';
+    var h = REP.live ? '<button class="back" data-act="follow">← Canlı ilerleme</button>' : '<button class="back" data-act="closereport">← Kendi siteme dön</button>';
+    h += '<div class="course-title"><small>İlerleme raporu · '+(REP.live && REP.u ? 'son güncelleme '+esc(ago(REP.u)) : esc(REP.d)+' tarihli')+'</small><h1>'+esc(who)+'</h1></div>';
     h += '<div class="stats"><div class="stat"><b>'+all.solved+'/'+all.total+'</b><span>çözülen soru</span></div>'
       + '<div class="stat"><b style="color:'+pctColor(all.pct)+'">%'+all.pct+'</b><span>başarı</span></div>'
       + '<div class="stat"><b>'+(REP.s||0)+'🔥</b><span>gün seri</span></div></div>';
@@ -480,6 +503,36 @@
     h += '<div class="footer">Bu sayfa yalnızca linkteki verileri gösterir. Kendi ilerlemen değişmez.</div>';
     app.innerHTML = h;
     window.scrollTo(0,0);
+  }
+
+  function ago(ms){
+    var m = Math.round((Date.now()-ms)/60000);
+    if(m < 1) return "az önce"; if(m < 60) return m+" dk önce";
+    var h = Math.round(m/60); if(h < 24) return h+" saat önce";
+    return Math.round(h/24)+" gün önce";
+  }
+  var FOLLOW = null;
+  function followPage(){
+    view = {name:"follow"}; REP = null;
+    var h = '<button class="back" data-act="home">← Dersler</button>';
+    h += '<div class="course-title"><small>Canlı ilerleme</small><h1>Kim ne durumda?</h1></div>';
+    h += '<button class="btn ghost" data-act="follow">↻ Yenile</button><div id="flist" class="empty">Yükleniyor…</div>';
+    app.innerHTML = h; window.scrollTo(0,0);
+    fetch(DB+"/p.json?t="+Date.now()).then(function(r){ return r.json(); }).then(function(data){
+      FOLLOW = data || {};
+      var ids = Object.keys(FOLLOW).sort(function(a,b){ return (FOLLOW[b].u||0)-(FOLLOW[a].u||0); });
+      var el = document.getElementById("flist"); if(!el) return;
+      if(!ids.length){ el.textContent = "Henüz kimse çözmedi."; return; }
+      var o = '';
+      ids.forEach(function(id){
+        REP = FOLLOW[id]; var st = repStats(TESTS); REP = null;
+        var nm = FOLLOW[id].ad || "İsimsiz";
+        o += '<button class="card" data-act="openrep" data-id="'+esc(id)+'"><div class="meta"><span>'+esc(ago(FOLLOW[id].u||0))+'</span>'+(id===S.dev?'<span class="pill lesson">BU CİHAZ</span>':'')+'</div>'
+          + '<h3>'+esc(nm)+'</h3><p>'+st.solved+'/'+st.total+' soru çözüldü · '+st.wrong.length+' yanlış</p>'
+          + '<div class="foot"><div class="bar"><i style="width:'+st.pct+'%;background:'+pctColor(st.pct)+'"></i></div><span>%'+st.pct+' başarı</span></div></button>';
+      });
+      el.className = ""; el.innerHTML = o;
+    }).catch(function(){ var el = document.getElementById("flist"); if(el) el.textContent = "Bağlantı kurulamadı. İnterneti kontrol edip yenile."; });
   }
 
   function reportText(){
@@ -537,6 +590,8 @@
     else if(a==="retrywrong") retryWrongFromResult();
     else if(a==="view"){ Q.view = b.getAttribute("data-v"); result(); }
     else if(a==="share") shareProgress();
+    else if(a==="follow") followPage();
+    else if(a==="openrep"){ REP = FOLLOW[b.getAttribute("data-id")]; REP.live = true; reportPage(); }
     else if(a==="copyreport") copyReport();
     else if(a==="closereport"){ history.replaceState(null, "", location.pathname + location.search); REP = null; home(); }
   });
@@ -544,5 +599,6 @@
   function route(){ REP = readReport(); if(REP) reportPage(); else if(view.name==="report") home(); }
   window.addEventListener("hashchange", route);
   REP = readReport();
-  if(REP) reportPage(); else home();
+  if(REP) reportPage(); else if(location.hash==="#takip") followPage(); else home();
+  syncSoon(500);
 })();

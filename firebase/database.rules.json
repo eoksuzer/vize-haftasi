@@ -1,0 +1,24 @@
+{
+  "rules": {
+    ".read": false,
+    ".write": false,
+    "p": {
+      ".read": true,
+      "$dev": {
+        ".write": "$dev.matches(/^[a-z0-9]{12}$/)",
+        ".validate": "newData.hasChildren(['u', 'd', 't'])",
+        "ad": { ".validate": "newData.isString() && newData.val().length <= 30" },
+        "d":  { ".validate": "newData.isString() && newData.val().length <= 10" },
+        "s":  { ".validate": "newData.isNumber()" },
+        "k":  { ".validate": "newData.isNumber()" },
+        "u":  { ".validate": "newData.val() === now" },
+        "t":  {
+          "$test": {
+            ".validate": "$test.matches(/^[a-z0-9._-]{1,40}$/) && newData.hasChildren(['2', '3'])"
+          }
+        },
+        "$other": { ".validate": false }
+      }
+    }
+  }
+}
