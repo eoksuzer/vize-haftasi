@@ -2,7 +2,7 @@
 //  SORU BANKASI
 //  Yapı: DERS (COURSES) > KONU (units) > TEST
 //
-//  Yeni yükleme yaparken:
+//  Yeni yükleme yaparken (index.html script etiketlerindeki ?v= değerini de artır):
 //   1) SITE.version'ı 1 artır (ör. 2 -> 3)
 //   2) Yeni testlere  v: <yeni sürüm>  yaz -> sitede "V3 · YENİ" diye çıkar
 //   3) Test id'lerini sonradan değiştirme (ilerleme buna bağlı)
@@ -11,12 +11,13 @@
 
 window.SITE = {
   title: "Vize Haftası",
-  version: 4,
+  version: 5,
   notes: {
     1: "İlk yükleme: Ders 1 ve Ders 2 notlarından 4 test",
     2: "Kitap başlıklarına göre konu düzeni ve 8 yeni test",
     3: "Türk İşaret Dili dersi: 5 ünite, 100 görselli soru ve işaret kartları",
-    4: "Masajda kas anatomisi: origo, insertio, sinir ve fonksiyon, 7 test"
+    4: "Masajda kas anatomisi: origo, insertio, sinir ve fonksiyon, 7 test",
+    5: "Türk İşaret Dili 2. set: 5 test, 65 yeni soru ve gruplama soruları"
   }
 };
 

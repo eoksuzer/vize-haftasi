@@ -1419,3 +1419,971 @@ window.TESTS = window.TESTS.concat([
   ]
  }
 ]);
+// V5: 2. set
+window.TESTS = window.TESTS.concat([
+ {
+  "id": "tid-u1-2",
+  "course": "tid",
+  "unit": "u1",
+  "v": 5,
+  "src": "TİD kitabı s. 14–31",
+  "title": "Okulun Bölümleri · 2. Set",
+  "desc": "1. Ünite: 13 yeni soru · ilk sette sorulmayan işaretler ve gruplama soruları",
+  "date": "2026-11-16",
+  "questions": [
+   {
+    "q": "Bu işaret hangi gruba girer?",
+    "img": "tid/img/31-2.webp",
+    "o": [
+     "Okuldaki kişi",
+     "Ders adı",
+     "Geometrik şekil",
+     "Sayı"
+    ],
+    "a": 0,
+    "e": "Bu işaret 'Öğrenci' demektir, yani okuldaki kişi grubundadır. Kitapta s. 29."
+   },
+   {
+    "q": "Bu işaret ne anlama gelir?",
+    "img": "tid/img/16-0.webp",
+    "o": [
+     "Atatürk",
+     "Türk Bayrağı",
+     "Tahta Kalemi",
+     "Çizmek"
+    ],
+    "a": 0,
+    "e": "Bu işaret 'Atatürk' demektir. Kitapta s. 14."
+   },
+   {
+    "q": "Bu işaret ne anlama gelir?",
+    "img": "tid/img/20-2.webp",
+    "o": [
+     "Teneffüs",
+     "9 (dokuz)",
+     "Pano",
+     "3 (üç)"
+    ],
+    "a": 0,
+    "e": "Bu işaret 'Teneffüs' demektir. Kitapta s. 18."
+   },
+   {
+    "q": "'Bilmek' işareti hangisidir?",
+    "o": [
+     "Bilmek",
+     "Görsel Sanatlar",
+     "3 (üç)",
+     "7 (yedi)"
+    ],
+    "oimg": [
+     "tid/img/22-3.webp",
+     "tid/img/24-3.webp",
+     "tid/img/21-2.webp",
+     "tid/img/21-6.webp"
+    ],
+    "a": 0,
+    "e": "Doğru çizim 'Bilmek' işaretidir. Kitapta s. 20."
+   },
+   {
+    "q": "Bu işaret ne anlama gelir?",
+    "img": "tid/img/22-7.webp",
+    "o": [
+     "Cetvel",
+     "8 (sekiz)",
+     "5 (beş)",
+     "Teneffüs"
+    ],
+    "a": 0,
+    "e": "Bu işaret 'Cetvel' demektir. Kitapta s. 20."
+   },
+   {
+    "q": "Bu işaret ne anlama gelir?",
+    "img": "tid/img/26-4.webp",
+    "o": [
+     "Üst",
+     "Yapıştırmak",
+     "Sulu Boya",
+     "Makasla Kesmek"
+    ],
+    "a": 0,
+    "e": "Bu işaret 'Üst' demektir. Kitapta s. 24."
+   },
+   {
+    "q": "'Sandalye' işareti hangisidir?",
+    "o": [
+     "Sandalye",
+     "Öğretmek",
+     "Tekrar Etmek",
+     "Bilgisayar"
+    ],
+    "oimg": [
+     "tid/img/27-3.webp",
+     "tid/img/29-6.webp",
+     "tid/img/27-1.webp",
+     "tid/img/26-1.webp"
+    ],
+    "a": 0,
+    "e": "Doğru çizim 'Sandalye' işaretidir. Kitapta s. 25."
+   },
+   {
+    "q": "Bu işaret ne anlama gelir?",
+    "img": "tid/img/28-0.webp",
+    "o": [
+     "Serbest Etkinlik",
+     "Araba",
+     "Alt",
+     "Tekrar Etmek"
+    ],
+    "a": 0,
+    "e": "Bu işaret 'Serbest Etkinlik' demektir. Kitapta s. 26."
+   },
+   {
+    "q": "Aşağıdakilerden hangisi bir geometrik şeklin işaretidir?",
+    "o": [
+     "Küp",
+     "Öğretmen",
+     "Hizmetli",
+     "Müzik"
+    ],
+    "oimg": [
+     "tid/img/29-3.webp",
+     "tid/img/31-0.webp",
+     "tid/img/30-2.webp",
+     "tid/img/27-0.webp"
+    ],
+    "a": 0,
+    "e": "Doğru cevap 'Küp' (geometrik şekil). Diğer şıklar: Öğretmen, Hizmetli, Müzik. Kitapta s. 27."
+   },
+   {
+    "q": "Bu işaret ne anlama gelir?",
+    "img": "tid/img/30-1.webp",
+    "o": [
+     "Araba",
+     "Öğrenmek",
+     "Çanta",
+     "Oyun Hamuru"
+    ],
+    "a": 0,
+    "e": "Bu işaret 'Araba' demektir. Kitapta s. 28."
+   },
+   {
+    "q": "'Karne' işareti hangisidir?",
+    "o": [
+     "Karne",
+     "Küp",
+     "Çalışmak",
+     "Küre"
+    ],
+    "oimg": [
+     "tid/img/31-4.webp",
+     "tid/img/29-3.webp",
+     "tid/img/33-0.webp",
+     "tid/img/29-1.webp"
+    ],
+    "a": 0,
+    "e": "Doğru çizim 'Karne' işaretidir. Kitapta s. 29."
+   },
+   {
+    "q": "Bu işaret ne anlama gelir?",
+    "img": "tid/img/33-4.webp",
+    "o": [
+     "Dış",
+     "Çalışmak",
+     "Karne",
+     "Okul Müdürü"
+    ],
+    "a": 0,
+    "e": "Bu işaret 'Dış' demektir. Kitapta s. 31."
+   },
+   {
+    "q": "Aşağıdakilerden hangisi bir sayının işaretidir?",
+    "o": [
+     "9 (dokuz)",
+     "Daire",
+     "Matematik",
+     "Kare"
+    ],
+    "oimg": [
+     "tid/img/21-8.webp",
+     "tid/img/23-2.webp",
+     "tid/img/22-1.webp",
+     "tid/img/23-3.webp"
+    ],
+    "a": 0,
+    "e": "Doğru cevap '9 (dokuz)' (sayı). Diğer şıklar: Daire, Matematik, Kare. Kitapta s. 19."
+   }
+  ]
+ },
+ {
+  "id": "tid-u2-2",
+  "course": "tid",
+  "unit": "u2",
+  "v": 5,
+  "src": "TİD kitabı s. 36–46",
+  "title": "Günlük Konuşmalar · 2. Set",
+  "desc": "2. Ünite: 13 yeni soru · ilk sette sorulmayan işaretler ve gruplama soruları",
+  "date": "2026-11-16",
+  "questions": [
+   {
+    "q": "Bu işaret ne anlama gelir?",
+    "img": "tid/img/38-3.webp",
+    "o": [
+     "Günaydın.",
+     "Memnun oldum.",
+     "Arkadaş",
+     "Merhaba."
+    ],
+    "a": 0,
+    "e": "Bu işaret 'Günaydın.' demektir. Kitapta s. 36."
+   },
+   {
+    "q": "Bu işaret ne anlama gelir?",
+    "img": "tid/img/38-4.webp",
+    "o": [
+     "Arkadaş",
+     "Onlar",
+     "Günaydın.",
+     "O"
+    ],
+    "a": 0,
+    "e": "Bu işaret 'Arkadaş' demektir. Kitapta s. 36."
+   },
+   {
+    "q": "'İyiyim.' işareti hangisidir?",
+    "o": [
+     "İyiyim.",
+     "Doğru",
+     "Tanışmak",
+     "Hoş bulduk."
+    ],
+    "oimg": [
+     "tid/img/41-3.webp",
+     "tid/img/42-1.webp",
+     "tid/img/39-1.webp",
+     "tid/img/40-2.webp"
+    ],
+    "a": 0,
+    "e": "Doğru çizim 'İyiyim.' işaretidir. Kitapta s. 39."
+   },
+   {
+    "q": "Bu işaret ne anlama gelir?",
+    "img": "tid/img/42-1.webp",
+    "o": [
+     "Doğru",
+     "Yok",
+     "Tuvalete gidebilir miyim?",
+     "Farklı"
+    ],
+    "a": 0,
+    "e": "Bu işaret 'Doğru' demektir. Kitapta s. 40."
+   },
+   {
+    "q": "Bu işaret ne anlama gelir?",
+    "img": "tid/img/42-2.webp",
+    "o": [
+     "Aşağı",
+     "Yukarı",
+     "Eşleştirmek",
+     "Farklı"
+    ],
+    "a": 0,
+    "e": "Bu işaret 'Aşağı' demektir. Kitapta s. 40."
+   },
+   {
+    "q": "Aşağıdakilerden hangisi bir duygu ya da durumun işaretidir?",
+    "o": [
+     "Susadım.",
+     "Hoşça kal.",
+     "Siz",
+     "İyi akşamlar."
+    ],
+    "oimg": [
+     "tid/img/47-3.webp",
+     "tid/img/48-1.webp",
+     "tid/img/45-2.webp",
+     "tid/img/48-0.webp"
+    ],
+    "a": 0,
+    "e": "Doğru cevap 'Susadım.' (duygu ve durum). Diğer şıklar: Hoşça kal., Siz, İyi akşamlar.. Kitapta s. 45."
+   },
+   {
+    "q": "Bu işaret hangi gruba girer?",
+    "img": "tid/img/38-5.webp",
+    "o": [
+     "Adıl (zamir)",
+     "Selamlaşma",
+     "Soru sözcüğü",
+     "Duygu ve durum"
+    ],
+    "a": 0,
+    "e": "Bu işaret 'Onlar' demektir, yani adıl (zamir) grubundadır. Kitapta s. 36."
+   },
+   {
+    "q": "'Yok' işareti hangisidir?",
+    "o": [
+     "Yok",
+     "Doğru",
+     "Teşekkür ederim.",
+     "Farklı"
+    ],
+    "oimg": [
+     "tid/img/43-3.webp",
+     "tid/img/42-1.webp",
+     "tid/img/41-4.webp",
+     "tid/img/43-1.webp"
+    ],
+    "a": 0,
+    "e": "Doğru çizim 'Yok' işaretidir. Kitapta s. 41."
+   },
+   {
+    "q": "Bu işaret ne anlama gelir?",
+    "img": "tid/img/45-0.webp",
+    "o": [
+     "Karşılaştırmak",
+     "Doğum Günü",
+     "Acıktım.",
+     "Afiyet olsun."
+    ],
+    "a": 0,
+    "e": "Bu işaret 'Karşılaştırmak' demektir. Kitapta s. 43."
+   },
+   {
+    "q": "Aşağıdakilerden hangisi bir soru sözcüğünün işaretidir?",
+    "o": [
+     "Kim?",
+     "İyiyim.",
+     "İyi günler.",
+     "Sen"
+    ],
+    "oimg": [
+     "tid/img/40-0.webp",
+     "tid/img/41-3.webp",
+     "tid/img/39-0.webp",
+     "tid/img/38-0.webp"
+    ],
+    "a": 0,
+    "e": "Doğru cevap 'Kim?' (soru sözcüğü). Diğer şıklar: İyiyim., İyi günler., Sen. Kitapta s. 38."
+   },
+   {
+    "q": "Bu işaret ne anlama gelir?",
+    "img": "tid/img/47-0.webp",
+    "o": [
+     "Doğum Günü",
+     "Hoşça kal.",
+     "Özür dilerim.",
+     "Lütfen / Rica ederim."
+    ],
+    "a": 0,
+    "e": "Bu işaret 'Doğum Günü' demektir. Kitapta s. 45."
+   },
+   {
+    "q": "'Acıktım.' işareti hangisidir?",
+    "o": [
+     "Acıktım.",
+     "Siz",
+     "Önemli değil.",
+     "Afiyet olsun."
+    ],
+    "oimg": [
+     "tid/img/47-1.webp",
+     "tid/img/45-2.webp",
+     "tid/img/46-3.webp",
+     "tid/img/47-4.webp"
+    ],
+    "a": 0,
+    "e": "Doğru çizim 'Acıktım.' işaretidir. Kitapta s. 45."
+   },
+   {
+    "q": "Bu işaret ne anlama gelir?",
+    "img": "tid/img/48-0.webp",
+    "o": [
+     "İyi akşamlar.",
+     "Özür dilerim.",
+     "Susadım.",
+     "Afiyet olsun."
+    ],
+    "a": 0,
+    "e": "Bu işaret 'İyi akşamlar.' demektir. Kitapta s. 46."
+   }
+  ]
+ },
+ {
+  "id": "tid-u3-2",
+  "course": "tid",
+  "unit": "u3",
+  "v": 5,
+  "src": "TİD kitabı s. 52–65",
+  "title": "Ailem ve Evim · 2. Set",
+  "desc": "3. Ünite: 13 yeni soru · ilk sette sorulmayan işaretler ve gruplama soruları",
+  "date": "2026-11-16",
+  "questions": [
+   {
+    "q": "Bu işaret hangi gruba girer?",
+    "img": "tid/img/61-4.webp",
+    "o": [
+     "Aile bireyi",
+     "Banyo eşyası",
+     "Mutfak eşyası",
+     "Evin bölümü"
+    ],
+    "a": 0,
+    "e": "Bu işaret 'Nine' demektir, yani aile bireyi grubundadır. Kitapta s. 59."
+   },
+   {
+    "q": "Bu işaret ne anlama gelir?",
+    "img": "tid/img/55-3.webp",
+    "o": [
+     "Taramak",
+     "Lamba",
+     "Diş Fırçası",
+     "Çocuk"
+    ],
+    "a": 0,
+    "e": "Bu işaret 'Taramak' demektir. Kitapta s. 53."
+   },
+   {
+    "q": "Bu işaret ne anlama gelir?",
+    "img": "tid/img/56-0.webp",
+    "o": [
+     "Erkek",
+     "Uyanmak",
+     "Bakmak",
+     "Ütü"
+    ],
+    "a": 0,
+    "e": "Bu işaret 'Erkek' demektir. Kitapta s. 54."
+   },
+   {
+    "q": "'Sabun' işareti hangisidir?",
+    "o": [
+     "Sabun",
+     "Diş Fırçası",
+     "Erkek",
+     "Uyanmak"
+    ],
+    "oimg": [
+     "tid/img/56-3.webp",
+     "tid/img/56-4.webp",
+     "tid/img/56-0.webp",
+     "tid/img/57-6.webp"
+    ],
+    "a": 0,
+    "e": "Doğru çizim 'Sabun' işaretidir. Kitapta s. 54."
+   },
+   {
+    "q": "Bu işaret ne anlama gelir?",
+    "img": "tid/img/57-0.webp",
+    "o": [
+     "Korkmak",
+     "Bakmak",
+     "Erkek",
+     "Uyanmak"
+    ],
+    "a": 0,
+    "e": "Bu işaret 'Korkmak' demektir. Kitapta s. 55."
+   },
+   {
+    "q": "Bu işaret ne anlama gelir?",
+    "img": "tid/img/61-2.webp",
+    "o": [
+     "Masa",
+     "Çatal",
+     "Kalkmak",
+     "Bilgisayar"
+    ],
+    "a": 0,
+    "e": "Bu işaret 'Masa' demektir. Kitapta s. 59."
+   },
+   {
+    "q": "'Oturmak' işareti hangisidir?",
+    "o": [
+     "Oturmak",
+     "Tost Makinası",
+     "Tencere",
+     "Seyretmek"
+    ],
+    "oimg": [
+     "tid/img/61-3.webp",
+     "tid/img/63-1.webp",
+     "tid/img/61-1.webp",
+     "tid/img/62-1.webp"
+    ],
+    "a": 0,
+    "e": "Doğru çizim 'Oturmak' işaretidir. Kitapta s. 59."
+   },
+   {
+    "q": "Bu işaret ne anlama gelir?",
+    "img": "tid/img/62-2.webp",
+    "o": [
+     "Televizyon",
+     "Nine",
+     "Kaşık",
+     "Çatal"
+    ],
+    "a": 0,
+    "e": "Bu işaret 'Televizyon' demektir. Kitapta s. 60."
+   },
+   {
+    "q": "Bu işaret ne anlama gelir?",
+    "img": "tid/img/63-4.webp",
+    "o": [
+     "Tava",
+     "Oturma Odası",
+     "Ev",
+     "Nine"
+    ],
+    "a": 0,
+    "e": "Bu işaret 'Tava' demektir. Kitapta s. 61."
+   },
+   {
+    "q": "'İnmek' işareti hangisidir?",
+    "o": [
+     "İnmek",
+     "Çatı",
+     "Oynamak",
+     "Duvar"
+    ],
+    "oimg": [
+     "tid/img/64-3.webp",
+     "tid/img/64-1.webp",
+     "tid/img/62-4.webp",
+     "tid/img/65-4.webp"
+    ],
+    "a": 0,
+    "e": "Doğru çizim 'İnmek' işaretidir. Kitapta s. 62."
+   },
+   {
+    "q": "Bu işaret ne anlama gelir?",
+    "img": "tid/img/67-1.webp",
+    "o": [
+     "Açmak",
+     "Sağ",
+     "Hala",
+     "Duvar"
+    ],
+    "a": 0,
+    "e": "Bu işaret 'Açmak' demektir. Kitapta s. 65."
+   },
+   {
+    "q": "Aşağıdakilerden hangisi evin bir bölümünün işaretidir?",
+    "o": [
+     "Çatı",
+     "Anne",
+     "Baba",
+     "Tava"
+    ],
+    "oimg": [
+     "tid/img/64-1.webp",
+     "tid/img/66-1.webp",
+     "tid/img/66-0.webp",
+     "tid/img/63-4.webp"
+    ],
+    "a": 0,
+    "e": "Doğru cevap 'Çatı' (evin bölümü). Diğer şıklar: Anne, Baba, Tava. Kitapta s. 62."
+   },
+   {
+    "q": "Aşağıdakilerden hangisi bir banyo eşyasının işaretidir?",
+    "o": [
+     "Şampuan",
+     "Kız",
+     "Dede",
+     "Bebek"
+    ],
+    "oimg": [
+     "tid/img/58-3.webp",
+     "tid/img/57-5.webp",
+     "tid/img/60-3.webp",
+     "tid/img/57-2.webp"
+    ],
+    "a": 0,
+    "e": "Doğru cevap 'Şampuan' (banyo eşyası). Diğer şıklar: Kız, Dede, Bebek. Kitapta s. 56."
+   }
+  ]
+ },
+ {
+  "id": "tid-u4-2",
+  "course": "tid",
+  "unit": "u4",
+  "v": 5,
+  "src": "TİD kitabı s. 70–82",
+  "title": "Hayvanlar ve Bitkiler · 2. Set",
+  "desc": "4. Ünite: 13 yeni soru · ilk sette sorulmayan işaretler ve gruplama soruları",
+  "date": "2026-11-16",
+  "questions": [
+   {
+    "q": "Aşağıdakilerden hangisi bir rengin işaretidir?",
+    "o": [
+     "Sarı",
+     "5 (beş)",
+     "1 (bir)",
+     "Yaprak"
+    ],
+    "oimg": [
+     "tid/img/78-0.webp",
+     "tid/img/77-3.webp",
+     "tid/img/77-1.webp",
+     "tid/img/76-0.webp"
+    ],
+    "a": 0,
+    "e": "Doğru cevap 'Sarı' (renk). Diğer şıklar: 5 (beş), 1 (bir), Yaprak. Kitapta s. 76."
+   },
+   {
+    "q": "Bu işaret hangi gruba girer?",
+    "img": "tid/img/76-3.webp",
+    "o": [
+     "Bitki",
+     "Hayvan",
+     "Renk",
+     "Sayı"
+    ],
+    "a": 0,
+    "e": "Bu işaret 'Ot' demektir, yani bitki grubundadır. Kitapta s. 74."
+   },
+   {
+    "q": "Bu işaret ne anlama gelir?",
+    "img": "tid/img/73-0.webp",
+    "o": [
+     "Tavuk",
+     "Şaşkın",
+     "Ağaç Dikmek",
+     "Köpek"
+    ],
+    "a": 0,
+    "e": "Bu işaret 'Tavuk' demektir. Kitapta s. 71."
+   },
+   {
+    "q": "Bu işaret ne anlama gelir?",
+    "img": "tid/img/73-4.webp",
+    "o": [
+     "Ağaç Dikmek",
+     "Kedi",
+     "Traktör",
+     "Balık"
+    ],
+    "a": 0,
+    "e": "Bu işaret 'Ağaç Dikmek' demektir. Kitapta s. 71."
+   },
+   {
+    "q": "'Hayvan' işareti hangisidir?",
+    "o": [
+     "Hayvan",
+     "Ağaç",
+     "Bitki",
+     "Çiçek"
+    ],
+    "oimg": [
+     "tid/img/74-1.webp",
+     "tid/img/73-3.webp",
+     "tid/img/76-4.webp",
+     "tid/img/76-1.webp"
+    ],
+    "a": 0,
+    "e": "Doğru çizim 'Hayvan' işaretidir. Kitapta s. 72."
+   },
+   {
+    "q": "Bu işaret ne anlama gelir?",
+    "img": "tid/img/74-2.webp",
+    "o": [
+     "Traktör",
+     "Sinek",
+     "Tavuk",
+     "Keçi"
+    ],
+    "a": 0,
+    "e": "Bu işaret 'Traktör' demektir. Kitapta s. 72."
+   },
+   {
+    "q": "Bu işaret ne anlama gelir?",
+    "img": "tid/img/76-4.webp",
+    "o": [
+     "Bitki",
+     "Sinek",
+     "Uçmak",
+     "Hayvan"
+    ],
+    "a": 0,
+    "e": "Bu işaret 'Bitki' demektir. Kitapta s. 74."
+   },
+   {
+    "q": "'1 (bir)' işareti hangisidir?",
+    "o": [
+     "1 (bir)",
+     "Sinek",
+     "Çiçek",
+     "4 (dört)"
+    ],
+    "oimg": [
+     "tid/img/77-1.webp",
+     "tid/img/75-1.webp",
+     "tid/img/76-1.webp",
+     "tid/img/77-5.webp"
+    ],
+    "a": 0,
+    "e": "Doğru çizim '1 (bir)' işaretidir. Kitapta s. 75."
+   },
+   {
+    "q": "Bu işaret ne anlama gelir?",
+    "img": "tid/img/79-4.webp",
+    "o": [
+     "Eşek",
+     "Saymak",
+     "Nerede?",
+     "Mavi"
+    ],
+    "a": 0,
+    "e": "Bu işaret 'Eşek' demektir. Kitapta s. 77."
+   },
+   {
+    "q": "Bu işaret ne anlama gelir?",
+    "img": "tid/img/82-0.webp",
+    "o": [
+     "Ayı",
+     "Kısa",
+     "Aslan",
+     "Terlik"
+    ],
+    "a": 0,
+    "e": "Bu işaret 'Ayı' demektir. Kitapta s. 80."
+   },
+   {
+    "q": "'Boyamak' işareti hangisidir?",
+    "o": [
+     "Boyamak",
+     "Fare",
+     "Aslan",
+     "Yılan"
+    ],
+    "oimg": [
+     "tid/img/84-0.webp",
+     "tid/img/84-3.webp",
+     "tid/img/82-2.webp",
+     "tid/img/82-1.webp"
+    ],
+    "a": 0,
+    "e": "Doğru çizim 'Boyamak' işaretidir. Kitapta s. 82."
+   },
+   {
+    "q": "Aşağıdakilerden hangisi bir hayvanın işaretidir?",
+    "o": [
+     "Sinek",
+     "Yaprak",
+     "1 (bir)",
+     "4 (dört)"
+    ],
+    "oimg": [
+     "tid/img/75-1.webp",
+     "tid/img/76-0.webp",
+     "tid/img/77-1.webp",
+     "tid/img/77-5.webp"
+    ],
+    "a": 0,
+    "e": "Doğru cevap 'Sinek' (hayvan). Diğer şıklar: Yaprak, 1 (bir), 4 (dört). Kitapta s. 73."
+   },
+   {
+    "q": "Bu işaret ne anlama gelir?",
+    "img": "tid/img/84-1.webp",
+    "o": [
+     "Zürafa",
+     "Yılan",
+     "Boyamak",
+     "Küçük"
+    ],
+    "a": 0,
+    "e": "Bu işaret 'Zürafa' demektir. Kitapta s. 82."
+   }
+  ]
+ },
+ {
+  "id": "tid-u5-2",
+  "course": "tid",
+  "unit": "u5",
+  "v": 5,
+  "src": "TİD kitabı s. 88–102",
+  "title": "Yiyecekler ve İçecekler · 2. Set",
+  "desc": "5. Ünite: 13 yeni soru · ilk sette sorulmayan işaretler ve gruplama soruları",
+  "date": "2026-11-16",
+  "questions": [
+   {
+    "q": "Bu işaret ne anlama gelir?",
+    "img": "tid/img/90-2.webp",
+    "o": [
+     "Zeytin",
+     "Tereyağı",
+     "Acıkmak",
+     "Simit"
+    ],
+    "a": 0,
+    "e": "Bu işaret 'Zeytin' demektir. Kitapta s. 88."
+   },
+   {
+    "q": "Bu işaret ne anlama gelir?",
+    "img": "tid/img/90-4.webp",
+    "o": [
+     "Tuz",
+     "Zeytin",
+     "Yumurta",
+     "Susamak"
+    ],
+    "a": 0,
+    "e": "Bu işaret 'Tuz' demektir. Kitapta s. 88."
+   },
+   {
+    "q": "Aşağıdakilerden hangisi bir meyvenin işaretidir?",
+    "o": [
+     "Kayısı",
+     "Domates",
+     "Soğan",
+     "Mısır"
+    ],
+    "oimg": [
+     "tid/img/98-0.webp",
+     "tid/img/96-2.webp",
+     "tid/img/100-0.webp",
+     "tid/img/97-1.webp"
+    ],
+    "a": 0,
+    "e": "Doğru cevap 'Kayısı' (meyve). Diğer şıklar: Domates, Soğan, Mısır. Kitapta s. 96."
+   },
+   {
+    "q": "'Tavuk' işareti hangisidir?",
+    "o": [
+     "Tavuk",
+     "Mandalina",
+     "Elma",
+     "Patlıcan"
+    ],
+    "oimg": [
+     "tid/img/94-0.webp",
+     "tid/img/93-4.webp",
+     "tid/img/92-0.webp",
+     "tid/img/96-0.webp"
+    ],
+    "a": 0,
+    "e": "Doğru çizim 'Tavuk' işaretidir. Kitapta s. 92."
+   },
+   {
+    "q": "Bu işaret ne anlama gelir?",
+    "img": "tid/img/95-1.webp",
+    "o": [
+     "Bulgur Pilavı",
+     "Ayva",
+     "Mısır",
+     "Kesmek"
+    ],
+    "a": 0,
+    "e": "Bu işaret 'Bulgur Pilavı' demektir. Kitapta s. 93."
+   },
+   {
+    "q": "Bu işaret ne anlama gelir?",
+    "img": "tid/img/95-2.webp",
+    "o": [
+     "Mantı",
+     "Pizza",
+     "Hamburger",
+     "Mısır"
+    ],
+    "a": 0,
+    "e": "Bu işaret 'Mantı' demektir. Kitapta s. 93."
+   },
+   {
+    "q": "Bu işaret hangi gruba girer?",
+    "img": "tid/img/99-5.webp",
+    "o": [
+     "İçecek",
+     "Meyve",
+     "Sebze",
+     "Kuruyemiş"
+    ],
+    "a": 0,
+    "e": "Bu işaret 'Ayran' demektir, yani i̇çecek grubundadır. Kitapta s. 97."
+   },
+   {
+    "q": "'Pişirmek' işareti hangisidir?",
+    "o": [
+     "Pişirmek",
+     "Meyve Suyu",
+     "Üzüm",
+     "Limon"
+    ],
+    "oimg": [
+     "tid/img/100-2.webp",
+     "tid/img/102-1.webp",
+     "tid/img/98-4.webp",
+     "tid/img/98-6.webp"
+    ],
+    "a": 0,
+    "e": "Doğru çizim 'Pişirmek' işaretidir. Kitapta s. 98."
+   },
+   {
+    "q": "Bu işaret ne anlama gelir?",
+    "img": "tid/img/100-6.webp",
+    "o": [
+     "Şeftali",
+     "Limon",
+     "Ekmek",
+     "Tatlı"
+    ],
+    "a": 0,
+    "e": "Bu işaret 'Şeftali' demektir. Kitapta s. 98."
+   },
+   {
+    "q": "Bu işaret ne anlama gelir?",
+    "img": "tid/img/101-4.webp",
+    "o": [
+     "Peynir",
+     "Acı",
+     "Köfte",
+     "Çilek"
+    ],
+    "a": 0,
+    "e": "Bu işaret 'Peynir' demektir. Kitapta s. 99."
+   },
+   {
+    "q": "'Dolu' işareti hangisidir?",
+    "o": [
+     "Dolu",
+     "Doymak",
+     "Yemek",
+     "Baklava"
+    ],
+    "oimg": [
+     "tid/img/103-4.webp",
+     "tid/img/103-1.webp",
+     "tid/img/103-2.webp",
+     "tid/img/102-3.webp"
+    ],
+    "a": 0,
+    "e": "Doğru çizim 'Dolu' işaretidir. Kitapta s. 101."
+   },
+   {
+    "q": "Aşağıdakilerden hangisi bir kuruyemişin işaretidir?",
+    "o": [
+     "Badem",
+     "Meyve Suyu",
+     "Marul",
+     "Salatalık"
+    ],
+    "oimg": [
+     "tid/img/104-2.webp",
+     "tid/img/102-1.webp",
+     "tid/img/100-1.webp",
+     "tid/img/96-1.webp"
+    ],
+    "a": 0,
+    "e": "Doğru cevap 'Badem' (kuruyemiş). Diğer şıklar: Meyve Suyu, Marul, Salatalık. Kitapta s. 102."
+   },
+   {
+    "q": "Bu işaret ne anlama gelir?",
+    "img": "tid/img/104-3.webp",
+    "o": [
+     "Kestane",
+     "Köfte",
+     "Tatlı",
+     "Fındık"
+    ],
+    "a": 0,
+    "e": "Bu işaret 'Kestane' demektir. Kitapta s. 102."
+   }
+  ]
+ }
+]);
