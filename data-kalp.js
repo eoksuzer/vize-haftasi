@@ -11,7 +11,7 @@
       {id:"k-aort", code:"3", title:"Aort Kapak Hastalıkları"},
       {id:"k-mitral", code:"4", title:"Mitral ve Triküspit Kapak Hastalıkları"}
     ]});
-  var S1 = "Ders 1 (may1)", S2 = "Ders 2 (may2)";
+  var S1 = "may1.ppt", S2 = "may2.pptx";
   function T(id, unit, src, title, desc, qs){ return {id:id, course:"kalp", unit:unit, v:9, src:src, date:"2026-11-16", title:title, desc:desc, questions:qs}; }
 
   window.TESTS = window.TESTS.concat([
