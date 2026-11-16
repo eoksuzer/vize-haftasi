@@ -11,7 +11,7 @@
 
 window.SITE = {
   title: "Vize Haftası",
-  version: 8,
+  version: 9,
   // Arşive alınan dersler: ana sayfada "Arşiv" bölümünde görünür, testler ve ilerleme korunur
   archived: ["manip1", "kaslar", "tid"],
   notes: {
@@ -22,7 +22,8 @@ window.SITE = {
     5: "Türk İşaret Dili 2. set: 5 test, 65 yeni soru ve gruplama soruları",
     6: "Kas Anatomisi sekmesi: ders kas listesinin tablosu (60 kas) ve 8 test, 91 soru",
     7: "Türk İşaret Dili Sınav Hazırlık: 1–5. ünitelerden 35 kritik soru",
-    8: "Kas Anatomisi: Sınav öncesi mutlaka çözülmesi gereken 60 soru"
+    8: "Kas Anatomisi: Sınav öncesi mutlaka çözülmesi gereken 60 soru",
+    9: "Yeni ders: Kalp ve Damar Hastalıkları, 8 test, 100 soru"
   }
 };
 
