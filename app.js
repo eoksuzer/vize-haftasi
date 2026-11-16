@@ -39,7 +39,8 @@
   function today(){ var d=new Date(); return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"); }
   function daysSince(s){ return Math.round((new Date(today()) - new Date(s)) / 864e5); }
   function shuffle(a){ a=a.slice(); for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var x=a[i];a[i]=a[j];a[j]=x;} return a; }
-  function isNew(t){ return t.v === CUR && !T(t.id).seen; }
+  function isArch(cid){ return (SITE.archived||[]).indexOf(cid) >= 0; }
+  function isNew(t){ return t.v === CUR && !T(t.id).seen && !isArch(t.course); }
   function course(id){ return COURSES.filter(function(c){return c.id===id;})[0]; }
   function testsOf(cid){ return TESTS.filter(function(t){return t.course===cid;}); }
   function testById(id){ return TESTS.filter(function(t){return t.id===id;})[0]; }
@@ -103,7 +104,10 @@
 
   function home(){
     view = {name:"home"};
-    var st = stats(TESTS);
+    var activeC = COURSES.filter(function(c){ return !isArch(c.id); });
+    var archC = COURSES.filter(function(c){ return isArch(c.id); });
+    var activeT = TESTS.filter(function(t){ return !isArch(t.course); });
+    var st = stats(activeT);
     var fresh = TESTS.filter(isNew);
     var h = '<header class="top"><div class="brand"><small>Ders çalışma testleri · başarılar aşkım ❤️</small><h1>'+esc(SITE.title)+'</h1></div></header>';
 
@@ -113,25 +117,33 @@
         + '<div><b>Yeni yükleme geldi</b><span>'+fresh.length+' yeni test, '+q+' soru. Dokun, sadece yenileri göster.</span></div></button>';
     }
 
-    h += statsHtml(st);
+    if(activeT.length) h += statsHtml(st);
     h += '<div class="sec-title">Dersler</div>';
-    COURSES.forEach(function(c){
+    if(!activeC.length) h += '<div class="card newterm"><h3>🌱 Yeni dersler yolda</h3><p>Vize haftası testleri arşive alındı. Yeni dersin testleri yüklenince burada görünecek.</p></div>';
+    function courseCard(c, arch){
       var list = testsOf(c.id), cs = stats(list);
       var nNew = list.filter(isNew).length;
-      var pills = nNew ? '<span class="pill new">'+nNew+' yeni test</span>' : '';
-      h += '<button class="card course" data-act="course" data-id="'+c.id+'">'
+      var pills = arch ? '<span class="pill v">ARŞİV</span>' : (nNew ? '<span class="pill new">'+nNew+' yeni test</span>' : '');
+      return '<button class="card course'+(arch?' arch':'')+'" data-act="course" data-id="'+c.id+'">'
         + '<div class="meta">'+pills+'<span>'+list.length+' test · '+cs.total+' soru</span></div>'
         + '<h3>'+esc(c.name)+'</h3><p>'+esc(c.sub||"")+'</p>'
         + '<div class="foot"><div class="bar"><i style="width:'+cs.cover+'%"></i></div><span>%'+cs.cover+' çözüldü</span></div>'
         + '</button>';
-    });
+    }
+    activeC.forEach(function(c){ h += courseCard(c, false); });
+    if(archC.length){
+      var at = TESTS.filter(function(t){ return isArch(t.course); }), as = stats(at);
+      h += '<div class="sec-title">Arşiv · Vize Haftası</div>';
+      h += '<div class="archnote">'+at.length+' test · '+as.total+' soru · '+as.solved+' çözüldü, %'+as.pct+' başarı. Testler ve ilerleme duruyor, istediğin zaman çözebilirsin.</div>';
+      archC.forEach(function(c){ h += courseCard(c, true); });
+    }
 
     if(SITE.notes){
-      h += '<div class="sec-title">Sürümler</div><div class="changelog">';
+      h += '<div class="sec-title">Sürümler</div><details class="changelog"><summary>Sürüm geçmişi (V'+CUR+')</summary>';
       Object.keys(SITE.notes).sort(function(a,b){return b-a;}).forEach(function(v){
         h += '<div><b>V'+v+'</b> · '+esc(SITE.notes[v])+'</div>';
       });
-      h += '</div>';
+      h += '</details>';
     }
     h += '<div class="sec-title">Takip</div>';
     h += '<button class="card" data-act="follow"><h3>👥 Canlı ilerleme</h3><p>Siteyi kullanan herkesin konu konu istatistikleri ve yanlışları. Çözüldükçe kendiliğinden güncellenir.</p></button>';
@@ -154,6 +166,7 @@
 
     var h = '<button class="back" data-act="home">← Dersler</button>';
     h += '<div class="course-title"><small>'+esc(c.sub||"")+'</small><h1>'+esc(c.name)+'</h1></div>';
+    if(isArch(cid)) h += '<div class="archnote">🗄️ Bu ders arşivde. Testleri çözmeye ve ilerlemeni görmeye devam edebilirsin.</div>';
     h += statsHtml(st);
 
     if(wrongs.length){
