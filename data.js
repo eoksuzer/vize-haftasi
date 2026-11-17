@@ -11,7 +11,7 @@
 
 window.SITE = {
   title: "Vize Haftası",
-  version: 10,
+  version: 11,
   // Arşive alınan dersler: ana sayfada "Arşiv" bölümünde görünür, testler ve ilerleme korunur
   archived: ["manip1", "kaslar", "tid"],
   notes: {
@@ -24,7 +24,8 @@ window.SITE = {
     7: "Türk İşaret Dili Sınav Hazırlık: 1–5. ünitelerden 35 kritik soru",
     8: "Kas Anatomisi: Sınav öncesi mutlaka çözülmesi gereken 60 soru",
     9: "Yeni ders: Kalp ve Damar Hastalıkları, 8 test, 100 soru",
-    10: "Dosya adlı testler: may3.key testi, Cocuk_Ergen_Psikiyatrisi_1_Ders_Fizyoterapi.key testi, fizyoterapi ders.pptx testi (3 × 50 soru)"
+    10: "Dosya adlı testler: may3.key testi, Cocuk_Ergen_Psikiyatrisi_1_Ders_Fizyoterapi.key testi, fizyoterapi ders.pptx testi (3 × 50 soru)",
+    11: "Yeni ders: Normal Motor Gelişim (salı klasörü), dosya adlı 6 test × 35 soru"
   }
 };
 
