@@ -207,7 +207,10 @@
     var correct = Object.keys(s.answers).filter(function(k){return s.answers[k];}).length;
     var pills = vPill(t);
     if(s.best!==null && s.best===n) pills += '<span class="pill done">TAM PUAN</span>';
-    var info = s.attempts ? 'En iyi: <b>'+s.best+'/'+n+'</b> · '+s.attempts+' deneme' : n+' soru · henüz çözülmedi';
+    var answered = Object.keys(s.answers).length;
+    var info = s.attempts ? 'En iyi: <b>'+s.best+'/'+n+'</b> · '+s.attempts+' deneme'
+      : answered ? '<b>'+answered+'/'+n+'</b> cevaplandı · '+correct+' doğru'
+      : n+' soru · henüz çözülmedi';
     return '<button class="card" data-act="start" data-id="'+t.id+'">'
       + '<div class="meta">'+pills+(t.src?'<span class="src">'+esc(t.src)+'</span>':'')+'</div>'
       + '<h3>'+esc(t.title)+'</h3><p>'+esc(t.desc)+'</p>'
