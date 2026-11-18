@@ -133,7 +133,7 @@
     activeC.forEach(function(c){ h += courseCard(c, false); });
     if(archC.length){
       var at = TESTS.filter(function(t){ return isArch(t.course); }), as = stats(at);
-      h += '<div class="sec-title">Arşiv · Vize Haftası</div>';
+      h += '<div class="sec-title">Arşiv</div>';
       h += '<div class="archnote">'+at.length+' test · '+as.total+' soru · '+as.solved+' çözüldü, %'+as.pct+' başarı. Testler ve ilerleme duruyor, istediğin zaman çözebilirsin.</div>';
       archC.forEach(function(c){ h += courseCard(c, true); });
     }

@@ -13,7 +13,7 @@ window.SITE = {
   title: "Vize Haftası",
   version: 12,
   // Arşive alınan dersler: ana sayfada "Arşiv" bölümünde görünür, testler ve ilerleme korunur
-  archived: ["manip1", "kaslar", "tid"],
+  archived: ["manip1", "kaslar", "tid", "kalp"],
   notes: {
     1: "İlk yükleme: Ders 1 ve Ders 2 notlarından 4 test",
     2: "Kitap başlıklarına göre konu düzeni ve 8 yeni test",
