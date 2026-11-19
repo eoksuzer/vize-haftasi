@@ -11,9 +11,9 @@
 
 window.SITE = {
   title: "Vize Haftası",
-  version: 13,
+  version: 14,
   // Arşive alınan dersler: ana sayfada "Arşiv" bölümünde görünür, testler ve ilerleme korunur
-  archived: ["manip1", "kaslar", "tid", "kalp"],
+  archived: ["manip1", "kaslar", "tid", "kalp", "cocuk", "romato", "motor", "elektro", "ingilizce"],
   notes: {
     1: "İlk yükleme: Ders 1 ve Ders 2 notlarından 4 test",
     2: "Kitap başlıklarına göre konu düzeni ve 8 yeni test",
@@ -27,7 +27,8 @@ window.SITE = {
     10: "Dosya adlı testler: may3.key testi, Cocuk_Ergen_Psikiyatrisi_1_Ders_Fizyoterapi.key testi, fizyoterapi ders.pptx testi (3 × 50 soru)",
     11: "Yeni ders: Normal Motor Gelişim (salı klasörü), dosya adlı 6 test × 35 soru",
     12: "Yeni ders: Elektrofiziksel Ajanlar I (çarşamba klasörü), dosya adlı 5 test × 60 soru",
-    13: "Yeni ders: İngilizce (Vocational Medical English), Unit 1–10, her ünite 50 soru"
+    13: "Yeni ders: İngilizce (Vocational Medical English), Unit 1–10, her ünite 50 soru",
+    14: "Perşembe: 15 dosya, dosya adlı testler, her biri 20 soru · eski dersler arşivde"
   }
 };
 
