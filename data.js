@@ -11,9 +11,9 @@
 
 window.SITE = {
   title: "Vize Haftası",
-  version: 14,
+  version: 15,
   // Arşive alınan dersler: ana sayfada "Arşiv" bölümünde görünür, testler ve ilerleme korunur
-  archived: ["manip1", "kaslar", "tid", "kalp", "cocuk", "romato", "motor", "elektro", "ingilizce"],
+  archived: ["manip1", "kaslar", "tid", "kalp", "cocuk", "romato", "motor", "elektro", "ingilizce", "persembe"],
   notes: {
     1: "İlk yükleme: Ders 1 ve Ders 2 notlarından 4 test",
     2: "Kitap başlıklarına göre konu düzeni ve 8 yeni test",
@@ -28,7 +28,8 @@ window.SITE = {
     11: "Yeni ders: Normal Motor Gelişim (salı klasörü), dosya adlı 6 test × 35 soru",
     12: "Yeni ders: Elektrofiziksel Ajanlar I (çarşamba klasörü), dosya adlı 5 test × 60 soru",
     13: "Yeni ders: İngilizce (Vocational Medical English), Unit 1–10, her ünite 50 soru",
-    14: "Perşembe: 15 dosya, dosya adlı testler, her biri 20 soru · eski dersler arşivde"
+    14: "Perşembe: 15 dosya, dosya adlı testler, her biri 20 soru · eski dersler arşivde",
+    15: "Cumartesi: Biyomekanik, 6 dosya, dosya adlı testler, her biri 25 soru · Perşembe arşivde"
   }
 };
 
